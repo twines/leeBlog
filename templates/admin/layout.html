@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>{{block "title" .}}{{end}}</title>
+    <meta name="keyword" content="{{block "keyword" .}}{{end}}"/>
+    <meta name="description" content="{{block "description" .}}{{end}}"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/layuiadmin/style/admin.css" media="all">
+    {{block "css" .}}{{end}}
+</head>
+
+<body>
+{{block "header" .}}
+{{end}}
+{{block "content" .}}
+{{end}}
+{{block "footer" .}}
+{{end}}
+{{block "js" .}}{{end}}
+</body>
+
+</html>

@@ -1,0 +1,256 @@
+definitions:
+  response.Response:
+    properties:
+      code:
+        type: integer
+      data:
+        type: object
+      message:
+        type: string
+    type: object
+info:
+  contact:
+    email: 1355081829@qq.com
+    name: 寒云
+    url: http://www.swagger.io/support
+  description: 这个API接口文档
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: LeeGo
+  version: "1.0"
+paths:
+  /admin/v1/admin/list:
+    get:
+      description: |-
+        # 请求参数
+        | 参数 | 说明 | 备注 |
+        | :-----| :----- | :----- |
+        |page|页码|默认是1，可以不填|
+        # 返回参数参数
+        | 参数 | 说明 | 备注 |
+        | :-----| :----- | :----- |
+        |name|用户名||
+        |avatar|头像||
+        |roleId|角色id||
+        |limit|每页数量||
+        |totalCount|总数据量||
+        |totalPage|总页码数||
+        |status|状态|20000表示成功|
+        |code|状态码||
+        |message|返回的信息||
+        |data|返回的具体数据||
+      parameters:
+      - description: 页码
+        in: query
+        name: page
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - bearer: []
+      summary: 管理员列表
+      tags:
+      - admin
+  /admin/v1/login:
+    post:
+      description: |-
+        # 请求参数
+        | 参数 | 说明 | 备注 |
+        | :-----| :----- | :----- |
+        |username|用户名||
+        |password|密码||
+        # 返回参数参数
+        | 参数 | 说明 | 备注 |
+        | :-----| :----- | :----- |
+        |code|状态码||
+        |message|返回的信息||
+        |data|返回的具体数据||
+      parameters:
+      - description: 用户名
+        in: formData
+        name: username
+        required: true
+        type: string
+      - description: 密码
+        in: formData
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 登录
+      tags:
+      - admin
+  /admin/v1/logout:
+    post:
+      parameters:
+      - description: 用户token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 退出
+      tags:
+      - admin
+  /admin/v1/order/list:
+    get:
+      description: |-
+        # 请求参数
+        | 参数 | 说明 | 备注 |
+        | :-----| :----- | :----- |
+        |page|页码||
+        # 返回参数参数
+        | 参数 | 说明 | 备注 |
+        | :-----| :----- | :----- |
+        |code|状态码||
+        |message|返回的信息||
+        |data|返回的具体数据||
+      parameters:
+      - description: 页码
+        in: query
+        name: page
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - bearer: []
+      summary: 订单列表
+      tags:
+      - admin
+  /admin/v1/user/list:
+    get:
+      description: |-
+        # 请求参数
+        | 参数 | 说明 | 备注 |
+        | :-----| :----- | :----- |
+        |page|页码||
+        # 返回参数参数
+        | 参数 | 说明 | 备注 |
+        | :-----| :----- | :----- |
+        |code|状态码||
+        |message|返回的信息||
+        |data|返回的具体数据||
+      parameters:
+      - description: 页码
+        in: query
+        name: page
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - bearer: []
+      summary: 用户列表
+      tags:
+      - admin
+  /api/v1/:
+    get:
+      description: '# aaaaa'
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: ID
+        in: query
+        name: name
+        type: string
+      - description: ID
+        in: formData
+        name: img
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: 首页
+      tags:
+      - 首页
+  /api/v1/index/detail:
+    get:
+      description: id 文章id|name文章名称
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: ID
+        in: query
+        name: name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: 详情
+      tags:
+      - 首页
+  /api/v1/index/post:
+    post:
+      deprecated: true
+      description: id 文章id|name文章名称
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: img
+        in: formData
+        name: img
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: 详情
+      tags:
+      - 首页
+schemes:
+- http
+- https
+securityDefinitions:
+  bearer:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

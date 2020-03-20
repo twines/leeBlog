@@ -1,0 +1,71 @@
+{{define "header"}}
+    {{template "nav" .}}
+{{end}}
+{{define "content"}}
+    <div class="container" style="height: 1000px">
+        {{/*        <ul class="nav">*/}}
+        {{/*            <li class="nav-item">*/}}
+        {{/*                <a class="nav-link text-dark" href="#">2020电影</a>*/}}
+        {{/*            </li>*/}}
+        {{/*            <li class="nav-item">*/}}
+        {{/*                <a class="nav-link text-dark" href="#">国语电影</a>*/}}
+        {{/*            </li>*/}}
+        {{/*            <li class="nav-item">*/}}
+        {{/*                <a class="nav-link text-dark" href="#">喜剧片</a>*/}}
+        {{/*            </li>*/}}
+        {{/*            <li class="nav-item">*/}}
+        {{/*                <a class="nav-link text-dark" href="#">动作片</a>*/}}
+        {{/*            </li>*/}}
+        {{/*            <li class="nav-item">*/}}
+        {{/*                <a class="nav-link text-dark" href="#">恐怖片</a>*/}}
+        {{/*            </li>*/}}
+        {{/*            <li class="nav-item">*/}}
+        {{/*                <a class="nav-link text-dark" href="#">爱情片</a>*/}}
+        {{/*            </li>*/}}
+        {{/*            <li class="nav-item">*/}}
+        {{/*                <a class="nav-link text-dark" href="#">科幻片</a>*/}}
+        {{/*            </li>*/}}
+        {{/*        </ul>*/}}
+
+        <div class="row mt-2">
+            <div class="list-group col-md-9">
+                {{if .blogSlice}}
+                    {{range $blog:=.blogSlice}}
+                        <a target="_blank" href="/blog/detail/{{$blog.ID}}"
+                           class="w-100 list-group-item list-group-item-action mb-2 border-left-0 border-right-0 border-top-0">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">{{$blog.Title|html}}</h5>
+                                <small class="text-muted">{{format $blog.CreatedAt "2006-01-02 15:04:05"}}</small>
+                            </div>
+                            <p class="mb-1">{{$blog.Description|html}}</p>
+                            <small class="text-muted">
+                                <i class="fas fa-thumbs-up mr-1"></i> {{$blog.Good}}
+                                <i class="fas fa-eye ml-5 mr-1"></i> {{$blog.View}}
+                            </small>
+                        </a>
+                    {{end}}
+                {{end}}
+            </div>
+            <div class="col-md-3 d-none d-md-block">
+                {{if .goodBlogSlice}}
+                    <ul class="list-group position-fixed">
+                        <li class="list-group-item bg-dark text-white">精选文章</li>
+                        {{range $blog:=.goodBlogSlice}}
+                            <li class="list-group-item border-0">
+                                <a class="text-dark text-decoration-none" target="_blank" href="/blog/detail/{{$blog.ID}}">
+                                    {{$blog.Title}}
+                                </a>
+                            </li>
+                        {{end}}
+                    </ul>
+                {{end}}
+            </div>
+            <div class="row mt-5" style="margin: 0 auto;text-align: center">
+                <nav>
+                    {{.paginate}}
+                </nav>
+            </div>
+
+        </div>
+    </div>
+{{end}}

@@ -1,0 +1,86 @@
+{{define "css"}}
+    <link rel="stylesheet" href="/editormd/css/editormd.css"/>
+{{end}}
+{{define "header"}}
+    {{template "nav" .}}
+{{end}}
+{{define "content"}}
+    <form method="post" action="/blog/update/{{.blog.ID}}" class="mt-1">
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="输入标题" value="{{.blog.Title}}" name="title">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div id="editor" style="height: 800px">
+                <textarea style="display:none;" name="content"></textarea>
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <label for="category" class="col-sm-2 col-form-label">类别</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="category" name="category" required>
+                    <option value="">请选择分类</option>
+                    {{range $category:=.childCategory}}
+                        {{if eq $category.ID $.blog.CategoryId}}
+                            <option selected="selected" value="{{$category.ID}}">{{$category.CategoryName}}</option>
+                        {{else}}
+                            <option value="{{$category.ID}}">{{$category.CategoryName}}</option>
+                        {{end}}
+                    {{end}}
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="description" class="col-sm-2 col-form-label">描述</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" id="description" name="description" required
+                          placeholder="输入描述方便seo">{{.blog.Description}}</textarea>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-dark text-white">提交</button>
+            </div>
+        </div>
+    </form>
+{{end}}
+{{define "js"}}
+    <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="/editormd/lib/marked.min.js"></script>
+    <script src="/editormd/lib/prettify.min.js"></script>
+    <script src="/editormd/lib/raphael.min.js"></script>
+    <script src="/editormd/lib/underscore.min.js"></script>
+    <script src="/editormd/lib/sequence-diagram.min.js"></script>
+    <script src="/editormd/lib/flowchart.min.js"></script>
+    <script src="/editormd/lib/jquery.flowchart.min.js"></script>
+    <script src="/editormd/editormd.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var editor = editormd("editor", {
+                markdown: "{{.blog.Content|html}}",
+                width: "100%",
+                height: "600px",
+                path: "/editormd/lib/",
+                imageUpload: true,
+                htmlDecode: "style,script,iframe",  // you can filter tags decode
+                //toc             : false,
+                tocm: true,    // Using [TOCM]
+                tocContainer: "#custom-toc-container", // 自定义 ToC 容器层
+                //gfm             : false,
+                //tocDropdown     : true,
+                markdownSourceCode: true, // 是否保留 Markdown 源码，即是否删除保存源码的 Textarea 标签
+                emoji: true,
+                taskList: true,
+                tex: true,  // 默认不解析
+                flowChart: true,  // 默认不解析
+                sequenceDiagram: true,  // 默认不解析
+                imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                imageUploadURL: "/upload"
+            });
+        });
+    </script>
+{{end}}
