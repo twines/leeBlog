@@ -3,6 +3,7 @@ package admins
 import (
 	"github.com/gin-gonic/gin"
 	"leeblog.com/app/http/response"
+	"leeblog.com/app/models"
 	"leeblog.com/app/services/admin"
 	"leeblog.com/pkg/utils"
 	"net/http"
@@ -46,7 +47,7 @@ func AdminIndex(c *gin.Context) {
 // @Success 200 {object} response.Response "{"code":200,"data":{},"msg":"ok"}"
 // @Router /admin/v1/admin/list [get]
 func AdminList(c *gin.Context) {
-	page, limit := 1, 15
+	page, limit := 1, 2
 	if p, err := strconv.Atoi(c.DefaultQuery("page", "1")); err == nil {
 		page = p
 	}
@@ -65,4 +66,28 @@ func AdminList(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"code": 20000, "message": "success", "data": mp})
 }
 func AdminDetail(c *gin.Context) {
+}
+func AdminAdd(c *gin.Context) {
+	name := c.PostForm("name")
+	password := c.PostForm("password")
+	if name == "" {
+		c.JSON(http.StatusOK, gin.H{"code": 40000, "message": "名称不可以为空"})
+		return
+	}
+	if password == "" {
+		c.JSON(http.StatusOK, gin.H{"code": 40000, "message": "密码不可以为空"})
+		return
+	}
+	var a models.Admin
+	if a = admin.NewAdminsService().GetAdminByName(name); a.ID > 0 {
+		c.JSON(http.StatusOK, gin.H{"code": 40000, "message": "管理员已经存在"})
+		return
+	}
+	a.Name = name
+	a.Password = utils.EncodeMD5(password)
+	if res := admin.NewAdminsService().AddAdmin(a); res {
+		c.JSON(http.StatusOK, gin.H{"code": 20000, "message": "success"})
+	} else {
+		c.JSON(http.StatusOK, gin.H{"code": 40000, "message": "失败"})
+	}
 }

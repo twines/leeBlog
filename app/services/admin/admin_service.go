@@ -14,6 +14,14 @@ func (a *AdminsService) GetAdminByName(name string) (admin models.Admin) {
 	return
 }
 func (a *AdminsService) GetAdminList(page int, limit int) (adminSlice []models.Admin, count int) {
-	models.DB().Offset((page - 1) * limit).Limit(limit).Find(&adminSlice).Offset(-1).Limit(-1).Count(&count)
+	models.DB().Order("id desc").Offset((page - 1) * limit).Limit(limit).Find(&adminSlice).Offset(-1).Limit(-1).Count(&count)
 	return
+}
+
+func (a *AdminsService) AddAdmin(admin models.Admin) bool {
+	res := models.DB().Create(&admin)
+	if res.RowsAffected > 0 {
+		return true
+	}
+	return false
 }

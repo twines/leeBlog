@@ -54,6 +54,8 @@ func adminRouter() {
 		apiV1Auth.GET("/admin/info", admins.AdminIndex)
 		//管理员列表
 		apiV1Auth.GET("/admin/list", admins.AdminList)
+		//添加管理员
+		apiV1Auth.POST("/admin/add", admins.AdminAdd)
 		apiV1Auth.GET("/order/index", admins.OrderIndex)
 		apiV1Auth.GET("/order/list", admins.OrderIndex)
 		apiV1Auth.GET("/user/list", admins.UserList)
