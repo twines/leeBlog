@@ -2,8 +2,8 @@ package admins
 
 import (
 	"github.com/gin-gonic/gin"
+	"leeblog.com/app/http/response"
 	"leeblog.com/app/services/admin"
-	"net/http"
 	"strconv"
 )
 
@@ -36,7 +36,8 @@ func UserList(c *gin.Context) {
 	mp["limit"] = limit
 	mp["totalPage"] = count
 	mp["data"] = userSlice
-	c.JSON(http.StatusOK, gin.H{"code": 20000, "message": "success", "data": mp})
+	response.APISuccess(c, mp)
+	//c.JSON(http.StatusOK, gin.H{"code": 20000, "message": "success", "data": mp})
 }
 
 //@Tags admin
@@ -46,9 +47,12 @@ func AddUser(c *gin.Context) {
 	userName := c.PostForm("userName")
 	password := c.PostForm("password")
 	if user, err := admin.NewUserService().AddUser(userName, password); err != nil {
-		c.JSON(http.StatusOK, gin.H{"code": 40000, "message": "failure", "data": err})
+		response.APIFailure(c, err)
+		//c.JSON(http.StatusOK, gin.H{"code": 40000, "message": "failure", "data": err})
 	} else {
-		c.JSON(http.StatusOK, gin.H{"code": 20000, "message": "success", "data": user})
+		response.APISuccess(c, user)
+
+		//c.JSON(http.StatusOK, gin.H{"code": 20000, "message": "success", "data": user})
 	}
 
 }
@@ -60,12 +64,18 @@ func DeleteUserById(c *gin.Context) {
 		if userId, err := strconv.Atoi(userIdStr); err == nil {
 			rev := admin.NewUserService().DeleteUserById(uint(userId))
 			if rev {
-				c.JSON(http.StatusOK, gin.H{"code": 20000, "message": "success"})
+				response.APISuccess(c, nil)
+
+				//c.JSON(http.StatusOK, gin.H{"code": 20000, "message": "success"})
 			} else {
-				c.JSON(http.StatusOK, gin.H{"code": 40000, "message": "failure"})
+				response.APIFailure(c, nil)
+
+				//c.JSON(http.StatusOK, gin.H{"code": 40000, "message": "failure"})
 			}
 		} else {
-			c.JSON(http.StatusOK, gin.H{"code": 40000, "message": "success", "data": err})
+			response.APIFailure(c, err)
+
+			//c.JSON(http.StatusOK, gin.H{"code": 40000, "message": "success", "data": err})
 		}
 	}
 
