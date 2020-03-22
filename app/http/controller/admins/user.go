@@ -71,25 +71,14 @@ func AddUser(c *gin.Context) {
 //@Tags admin
 // @Description # 请求参数
 func DeleteUserById(c *gin.Context) {
-	if userIdStr, ok := c.GetPostForm("userId"); ok {
-		if userId, err := strconv.Atoi(userIdStr); err == nil {
-			rev := admin.NewUserService().DeleteUserById(uint(userId))
-			if rev {
-				response.APISuccess(c, nil)
-
-				//c.JSON(http.StatusOK, gin.H{"code": 20000, "message": "success"})
-			} else {
-				response.APIFailure(c, nil)
-
-				//c.JSON(http.StatusOK, gin.H{"code": 40000, "message": "failure"})
-			}
-		} else {
-			response.APIFailure(c, err)
-
-			//c.JSON(http.StatusOK, gin.H{"code": 40000, "message": "success", "data": err})
-		}
+	userId := 0
+	if id, err := strconv.Atoi(c.Param("userId")); err == nil {
+		userId = id
+	}
+	if rev := admin.NewUserService().DeleteUserById(uint(userId)); rev {
+		response.APISuccess(c, nil)
 	} else {
-		response.APIResponse(c, response.MissingParameters, nil)
+		response.APIFailure(c, nil)
 	}
 
 }
