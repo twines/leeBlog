@@ -10,9 +10,10 @@ type UserService struct {
 func NewUserService() *UserService {
 	return &UserService{}
 }
-func (us *UserService) GetUserList(page int, limit int, keyWord string) (userSlice []models.User, count int) {
-	if keyWord != "" {
-		models.DB().Offset((page-1)*limit).Limit(limit).Find(&userSlice, "name like ? or mobile like ? or qq like ", keyWord, keyWord, keyWord)
+func (us *UserService) GetUserList(page int, limit int, keyword string) (userSlice []models.User, count int) {
+	if keyword != "" {
+		keyword = "%" + keyword + "%"
+		models.DB().Offset((page-1)*limit).Limit(limit).Find(&userSlice, "name like ? or mobile like ? or qq like ?", keyword, keyword, keyword)
 	} else {
 		models.DB().Offset((page - 1) * limit).Limit(limit).Find(&userSlice).Offset(-1).Limit(-1).Count(&count)
 	}

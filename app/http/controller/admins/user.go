@@ -33,8 +33,8 @@ func UserList(c *gin.Context) {
 		page = p
 	}
 	us := admin.NewUserService()
-	keyWord := c.DefaultQuery("keyWord", "")
-	userSlice, count := us.GetUserList(page, limit, keyWord)
+	keyword := c.DefaultQuery("keyword", "")
+	userSlice, count := us.GetUserList(page, limit, keyword)
 	mp := map[string]interface{}{}
 	mp["totalCount"] = count
 	mp["limit"] = limit
