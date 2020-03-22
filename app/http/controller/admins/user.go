@@ -38,7 +38,7 @@ func UserList(c *gin.Context) {
 	mp := map[string]interface{}{}
 	mp["totalCount"] = count
 	mp["limit"] = limit
-	mp["totalPage"] = count
+	mp["totalPage"] = utils.Page(count, limit)
 	mp["data"] = userSlice
 
 	response.APISuccess(c, mp)
