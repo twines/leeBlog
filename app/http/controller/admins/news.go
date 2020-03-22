@@ -62,7 +62,33 @@ func NewsDelete(c *gin.Context) {
 	}
 }
 func NewsUpdate(c *gin.Context) {
+	title := c.PostForm("title")
+	content := c.PostForm("content")
+	keyword := c.PostForm("keyword")
+	description := c.PostForm("description")
 
+	newsId := 0
+	if id, err := strconv.Atoi(c.Param("newsId")); err == nil {
+		newsId = id
+	}
+	if newsId <= 0 {
+		c.JSON(http.StatusOK, gin.H{"code": 40000, "message": "newsId必须大于0"})
+		return
+	}
+	news := admin.NewNewsService().GetNewsById(newsId)
+	if news.ID < 0 {
+		c.JSON(http.StatusOK, gin.H{"code": 40000, "message": "新闻公告不存在"})
+		return
+	}
+	news.Title = title
+	news.Content = content
+	news.Description = description
+	news.Keyword = keyword
+	if admin.NewNewsService().UpdateNews(news) {
+		c.JSON(http.StatusOK, gin.H{"code": 20000, "message": "success"})
+	} else {
+		c.JSON(http.StatusOK, gin.H{"code": 40000, "message": "编辑失败"})
+	}
 }
 func NewsList(c *gin.Context) {
 	page, limit := 1, 2
