@@ -47,6 +47,8 @@ func UserList(c *gin.Context) {
 // @Description # 请求参数
 // @Param userName formData string false "用户名"
 // @Param password formData string false "密码"
+// @Success 200 {object} response.APISuccess "{"code":20000,"data":{},"message":"ok"}"
+// @Router /admin/v1/user/add [post]
 func AddUser(c *gin.Context) {
 	userName := c.PostForm("userName")
 	password := c.PostForm("password")
@@ -73,7 +75,7 @@ func AddUser(c *gin.Context) {
 
 }
 
-//@Tags admin
+// @Tags admin
 // @Description # 请求参数
 func DeleteUserById(c *gin.Context) {
 	userId := 0

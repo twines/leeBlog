@@ -69,7 +69,7 @@ func adminRouter() {
 
 		//用户列表
 		//删除用户
-		apiV1Auth.DELETE("/user/delete/:userId", admins.DeleteUserById)
+		apiV1Auth.DELETE("/user/:userId", admins.DeleteUserById)
 		apiV1Auth.POST("/user/add", admins.AddUser)
 	}
 }
