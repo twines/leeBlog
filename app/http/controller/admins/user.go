@@ -3,7 +3,9 @@ package admins
 import (
 	"github.com/gin-gonic/gin"
 	"leeblog.com/app/http/response"
+	"leeblog.com/app/models"
 	"leeblog.com/app/services/admin"
+	"leeblog.com/pkg/utils"
 	"strconv"
 )
 
@@ -43,16 +45,22 @@ func UserList(c *gin.Context) {
 //@Tags admin
 // @Summary 添加人员
 // @Description # 请求参数
+// @Param userName formData string false "用户名"
+// @Param password formData string false "密码"
 func AddUser(c *gin.Context) {
 	userName := c.PostForm("userName")
 	password := c.PostForm("password")
-	if user, err := admin.NewUserService().AddUser(userName, password); err != nil {
-		response.APIFailure(c, err)
-		//c.JSON(http.StatusOK, gin.H{"code": 40000, "message": "failure", "data": err})
+	if u := admin.NewUserService().GetUserByName(userName); u.ID > 0 {
+		response.APIFailure(c, "用户已经存在")
+		return
+	}
+	user := models.User{}
+	user.Name = userName
+	user.Password = utils.EncodeMD5(password)
+	if res := admin.NewUserService().AddUser(user); !res {
+		response.APIFailure(c, "添加失败")
 	} else {
 		response.APISuccess(c, user)
-
-		//c.JSON(http.StatusOK, gin.H{"code": 20000, "message": "success", "data": user})
 	}
 
 }
