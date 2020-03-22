@@ -28,7 +28,7 @@ func LoginIndex(c *gin.Context) {
 // @Description |message|返回的信息||
 // @Description |data|返回的具体数据||
 // @Produce  json
-// @Param username formData string true "用户名"
+// @Param userName formData string true "用户名"
 // @Param password formData string true "密码"
 // @Success 200 {object} response.Response "{"code":200,"data":{},"msg":"ok"}"
 // @Router /admin/v1/login [post]
