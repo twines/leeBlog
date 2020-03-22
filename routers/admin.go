@@ -68,7 +68,8 @@ func adminRouter() {
 		apiV1Auth.POST("/role/permission/:roleId", admins.RolePermissionUpdate)
 
 		//用户列表
+		//删除用户
 		apiV1Auth.DELETE("/user/delete/:userId", admins.DeleteUserById)
-		apiV1Auth.POST("/user/add/:userName/password/:password", admins.AddUser)
+		apiV1Auth.POST("/user/add", admins.AddUser)
 	}
 }

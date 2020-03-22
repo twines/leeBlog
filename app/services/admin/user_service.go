@@ -1,8 +1,6 @@
 package admin
 
 import (
-	"crypto/md5"
-	"fmt"
 	"leeblog.com/app/models"
 )
 
@@ -28,18 +26,14 @@ func (us *UserService) DeleteUserById(userId uint) (success bool) {
 	}
 	return
 }
-func (us *UserService) AddUser(userName string, password string) (userModel models.User, err error) {
-	md5Pwd := fmt.Sprint(md5.Sum([]byte(password)))
-	user := models.User{Name: userName, Password: md5Pwd}
-	tmpUser := &models.User{}
-	db := models.DB().First(tmpUser, "name=", userName)
-	if tmpUser.Name == user.Name {
-		userModel = user
-		err = nil
-		return
-	} else {
-		err = db.Error
-		return
+func (us *UserService) GetUserByName(username string) (user models.User) {
+	models.DB().First(&user)
+	return
+}
+func (us *UserService) AddUser(user models.User) bool {
+	res := models.DB().Create(&user)
+	if res.RowsAffected > 0 {
+		return true
 	}
-
+	return false
 }
