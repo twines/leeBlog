@@ -7,10 +7,6 @@
 {{define "css"}}
     <link rel="stylesheet" href="/editormd/css/editormd.preview.css"/>
     <style>
-        body {
-            padding: 40px;
-        }
-
         #layout > header, .btns {
             width: auto;
         }
@@ -38,6 +34,10 @@
         #editormd-view {
             width: 100%;
             display: block;
+        }
+        pre{
+            overflow-x: scroll!important; /*添加横向滚动条*/
+            white-space: nowrap!important;/*不换行*/
         }
     </style>
 {{end}}
