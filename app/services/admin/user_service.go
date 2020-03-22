@@ -31,7 +31,6 @@ func (us *UserService) DeleteUserById(userId uint) (success bool) {
 	return
 }
 func (us *UserService) GetUserByName(username string) (user models.User) {
-
 	models.DB().First(&user, "name =?", username)
 	return
 }
