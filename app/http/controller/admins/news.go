@@ -26,10 +26,40 @@ func NewsAdd(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"code": 40000, "message": "添加失败，请稍后重试"})
 }
 func NewsDetail(c *gin.Context) {
-
+	newsId := 0
+	if id, err := strconv.Atoi(c.Param("newsId")); err == nil {
+		newsId = id
+	}
+	if newsId <= 0 {
+		c.JSON(http.StatusOK, gin.H{"code": 40000, "message": "newsId必须大于0"})
+		return
+	}
+	news := admin.NewNewsService().GetNewsById(newsId)
+	if news.ID < 0 {
+		c.JSON(http.StatusOK, gin.H{"code": 40000, "message": "新闻公告不存在"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"code": 20000, "message": "success", "data": news})
 }
 func NewsDelete(c *gin.Context) {
-
+	newsId := 0
+	if id, err := strconv.Atoi(c.Param("newsId")); err == nil {
+		newsId = id
+	}
+	if newsId <= 0 {
+		c.JSON(http.StatusOK, gin.H{"code": 40000, "message": "newsId必须大于0"})
+		return
+	}
+	news := admin.NewNewsService().GetNewsById(newsId)
+	if news.ID < 0 {
+		c.JSON(http.StatusOK, gin.H{"code": 40000, "message": "新闻公告不存在"})
+		return
+	}
+	if admin.NewNewsService().DeleteNews(newsId) {
+		c.JSON(http.StatusOK, gin.H{"code": 20000, "message": "success"})
+	} else {
+		c.JSON(http.StatusOK, gin.H{"code": 40000, "message": "删除失败"})
+	}
 }
 func NewsUpdate(c *gin.Context) {
 

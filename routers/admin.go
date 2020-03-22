@@ -66,11 +66,11 @@ func adminRouter() {
 		apiV1Auth.POST("/role/permission/:roleId", admins.RolePermissionUpdate)
 
 		//新闻公告管理
-		apiV1Auth.GET("/news/detail/:roleId", admins.NewsDetail)
+		apiV1Auth.GET("/news/detail/:newsId", admins.NewsDetail)
 		apiV1Auth.GET("/news/list", admins.NewsList)
-		apiV1Auth.POST("/news/update", admins.NewsUpdate)
+		apiV1Auth.POST("/news/update/:newsId", admins.NewsUpdate)
 		apiV1Auth.POST("/news/add", admins.NewsAdd)
-		apiV1Auth.DELETE("/news/update", admins.NewsDelete)
+		apiV1Auth.DELETE("/news/delete/:newsId", admins.NewsDelete)
 
 	}
 }

@@ -38,3 +38,7 @@ func (ns *NewsService) AddNews(news models.News) bool {
 	}
 	return false
 }
+func (ns *NewsService) GetNewsById(id int) (news models.News) {
+	models.DB().First(&news, id)
+	return
+}
