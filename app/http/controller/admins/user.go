@@ -77,6 +77,8 @@ func DeleteUserById(c *gin.Context) {
 
 			//c.JSON(http.StatusOK, gin.H{"code": 40000, "message": "success", "data": err})
 		}
+	} else {
+		response.APIResponse(c, response.MissingParameters, nil)
 	}
 
 }
