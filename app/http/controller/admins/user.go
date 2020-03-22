@@ -15,6 +15,7 @@ import (
 // @Description | 参数 | 说明 | 备注 |
 // @Description | :-----| :----- | :----- |
 // @Description |page|页码||
+// @Description |keyWord|页码||
 // @Description # 返回参数参数
 // @Description | 参数 | 说明 | 备注 |
 // @Description | :-----| :----- | :----- |
@@ -32,12 +33,14 @@ func UserList(c *gin.Context) {
 		page = p
 	}
 	us := admin.NewUserService()
-	userSlice, count := us.GetUserList(page, limit)
+	keyWord := c.DefaultQuery("keyWord", "")
+	userSlice, count := us.GetUserList(page, limit, keyWord)
 	mp := map[string]interface{}{}
 	mp["totalCount"] = count
 	mp["limit"] = limit
 	mp["totalPage"] = count
 	mp["data"] = userSlice
+
 	response.APISuccess(c, mp)
 	//c.JSON(http.StatusOK, gin.H{"code": 20000, "message": "success", "data": mp})
 }
