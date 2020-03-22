@@ -50,6 +50,14 @@ func UserList(c *gin.Context) {
 func AddUser(c *gin.Context) {
 	userName := c.PostForm("userName")
 	password := c.PostForm("password")
+	if userName == "" {
+		response.APIFailure(c, "用户名不可以为空")
+		return
+	}
+	if password == "" {
+		response.APIFailure(c, "用户密码不可以为空")
+		return
+	}
 	if u := admin.NewUserService().GetUserByName(userName); u.ID > 0 {
 		response.APIFailure(c, "用户已经存在")
 		return
@@ -68,23 +76,13 @@ func AddUser(c *gin.Context) {
 //@Tags admin
 // @Description # 请求参数
 func DeleteUserById(c *gin.Context) {
-	if userIdStr, ok := c.GetPostForm("userId"); ok {
-		if userId, err := strconv.Atoi(userIdStr); err == nil {
-			rev := admin.NewUserService().DeleteUserById(uint(userId))
-			if rev {
-				response.APISuccess(c, nil)
-
-				//c.JSON(http.StatusOK, gin.H{"code": 20000, "message": "success"})
-			} else {
-				response.APIFailure(c, nil)
-
-				//c.JSON(http.StatusOK, gin.H{"code": 40000, "message": "failure"})
-			}
-		} else {
-			response.APIFailure(c, err)
-
-			//c.JSON(http.StatusOK, gin.H{"code": 40000, "message": "success", "data": err})
-		}
+	userId := 0
+	if id, err := strconv.Atoi(c.Param("userId")); err == nil {
+		userId = id
 	}
-
+	if rev := admin.NewUserService().DeleteUserById(uint(userId)); rev {
+		response.APISuccess(c, nil)
+	} else {
+		response.APIFailure(c, nil)
+	}
 }
