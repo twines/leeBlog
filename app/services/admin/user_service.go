@@ -11,19 +11,15 @@ func NewUserService() *UserService {
 	return &UserService{}
 }
 func (us *UserService) GetUserList(page int, limit int, keyWord string) (userSlice []models.User, count int) {
-
 	if keyWord != "" {
-		models.DB().Offset((page-1)*limit).Limit(limit).Find(&userSlice, "name like ? or mobile like ? or qq like ", keyWord, keyWord, keyWord)
-		count = len(userSlice)
+		models.DB().Offset((page-1)*limit).Limit(limit).Where("name like ? or mobile like ? or qq like ", keyWord, keyWord, keyWord).Find(&userSlice).Offset(-1).Limit(-1).Count(&count)
 	} else {
-		models.DB().Offset((page - 1) * limit).Limit(limit).Find(&userSlice)
-		models.DB().Model(&models.User{}).Count(&count)
+		models.DB().Offset((page - 1) * limit).Limit(limit).Find(&userSlice).Offset(-1).Limit(-1).Count(&count)
 	}
 	return
 }
 
 func (us *UserService) DeleteUserById(userId uint) (success bool) {
-
 	db := models.DB().Delete(&models.User{}, "id=?", userId)
 	if db.RowsAffected > 0 {
 		success = true
