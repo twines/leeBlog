@@ -13,8 +13,6 @@ import (
 	"leeblog.com/app/models"
 )
 
-//import "leeblog.com/app/http/controller/admin"
-
 // adminRouter 后台管理路由
 func adminRouter() {
 	gob.Register(models.Admin{})
@@ -66,5 +64,13 @@ func adminRouter() {
 		apiV1Auth.POST("/role/add", admins.RoleAdd)
 		apiV1Auth.GET("/role/permission/:roleId", admins.RolePermission)
 		apiV1Auth.POST("/role/permission/:roleId", admins.RolePermissionUpdate)
+
+		//新闻公告管理
+		apiV1Auth.GET("/news/detail/:roleId", admins.NewsDetail)
+		apiV1Auth.GET("/news/list", admins.NewsList)
+		apiV1Auth.POST("/news/update", admins.NewsUpdate)
+		apiV1Auth.POST("/news/add", admins.NewsAdd)
+		apiV1Auth.DELETE("/news/update", admins.NewsDelete)
+
 	}
 }

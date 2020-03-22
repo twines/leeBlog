@@ -50,7 +50,7 @@ func setup() {
 		db.LogMode(true)
 	}
 
-	db.AutoMigrate(Admin{}, Permission{}, User{}, Role{})
+	db.AutoMigrate(Admin{}, Permission{}, User{}, Role{}, News{})
 
 	db.SingularTable(false)
 	db.DB().SetMaxIdleConns(10)
