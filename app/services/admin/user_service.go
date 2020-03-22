@@ -14,8 +14,7 @@ func (us *UserService) GetUserList(page int, limit int, keyWord string) (userSli
 	if keyWord != "" {
 		models.DB().Offset((page-1)*limit).Limit(limit).Find(&userSlice, "name like ? or mobile like ? or qq like ", keyWord, keyWord, keyWord)
 	} else {
-		models.DB().Offset((page - 1) * limit).Limit(limit).Find(&userSlice)
-		models.DB().Model(&models.User{}).Count(&count)
+		models.DB().Offset((page - 1) * limit).Limit(limit).Find(&userSlice).Offset(-1).Limit(-1).Count(&count)
 	}
 	return
 }
