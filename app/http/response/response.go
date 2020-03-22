@@ -13,11 +13,12 @@ type Response struct {
 type ApiCode int
 
 const (
-	_                = iota
-	Success  ApiCode = 20000
-	Failure          = 40000
-	NotFound         = 40001
-	UnAuth           = 40002
+	_                         = iota
+	Success           ApiCode = 20000
+	Failure                   = 40000
+	NotFound                  = 40001
+	UnAuth                    = 40002
+	MissingParameters         = 40003
 )
 
 func (apiCode ApiCode) String() string {
@@ -28,6 +29,8 @@ func (apiCode ApiCode) String() string {
 		return "Failure"
 	case NotFound:
 		return "Not Found"
+	case MissingParameters:
+		return "参数缺失"
 	case UnAuth:
 		return "没有授权"
 	}
