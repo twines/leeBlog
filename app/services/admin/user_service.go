@@ -13,7 +13,6 @@ func NewUserService() *UserService {
 func (us *UserService) GetUserList(page int, limit int, keyWord string) (userSlice []models.User, count int) {
 	if keyWord != "" {
 		models.DB().Offset((page-1)*limit).Limit(limit).Find(&userSlice, "name like ? or mobile like ? or qq like ", keyWord, keyWord, keyWord)
-		count = len(userSlice)
 	} else {
 		models.DB().Offset((page - 1) * limit).Limit(limit).Find(&userSlice)
 		models.DB().Model(&models.User{}).Count(&count)
