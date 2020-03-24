@@ -76,5 +76,14 @@ func adminRouter() {
 		apiV1Auth.POST("/site/config", admins.SiteConfig)
 		//获得网站配置
 		apiV1Auth.GET("/site/detail", admins.SiteDetail)
+
+		//留言列表
+		apiV1Auth.GET("/message/list", admins.MessageList)
+		//留言详情
+		apiV1Auth.GET("/message/detail/:msgId", admins.MessageDetail)
+		//工单列表
+		apiV1Auth.GET("/work/order/list", admins.WorkOrderList)
+		//工单详情
+		apiV1Auth.GET("/work/order/detail/:workOrderId", admins.WorkOrderDetail)
 	}
 }
