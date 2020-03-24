@@ -43,6 +43,7 @@ func adminRouter() {
 	{
 
 		apiV1.POST("/login", admins.LoginDoLogin)
+		apiV1.POST("/upload", admins.Upload)
 		apiV1.GET("/admin/detail", admins.AdminDetail)
 	}
 	apiV1Auth := adminRouter.Group("v1")
@@ -71,6 +72,9 @@ func adminRouter() {
 		apiV1Auth.POST("/news/update/:newsId", admins.NewsUpdate)
 		apiV1Auth.POST("/news/add", admins.NewsAdd)
 		apiV1Auth.DELETE("/news/delete/:newsId", admins.NewsDelete)
-
+		//增加网站配置
+		apiV1Auth.POST("/site/config", admins.SiteConfig)
+		//获得网站配置
+		apiV1Auth.GET("/site/detail", admins.SiteDetail)
 	}
 }

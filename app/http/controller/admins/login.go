@@ -34,9 +34,9 @@ func LoginIndex(c *gin.Context) {
 // @Router /admin/v1/login [post]
 func LoginDoLogin(c *gin.Context) {
 	userName := c.PostForm("userName")
-	admin := admin.NewAdminsService().GetAdminByName(userName)
-	token, _ := utils.GenToken(admin)
-	r := response.Response{Data: map[string]string{"token": token}, Code: 20000}
+	ad := admin.NewAdminsService().GetAdminByName(userName)
+	token, _ := utils.GenToken(ad)
+	r := response.Response{Data: map[string]interface{}{"token": token, "admin": ad}, Code: 20000}
 	c.JSON(http.StatusOK, r)
 }
 
