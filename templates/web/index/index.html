@@ -31,7 +31,7 @@
             <div class="list-group col-md-9">
                 {{if .blogSlice}}
                     {{range $blog:=.blogSlice}}
-                        <a target="_blank" href="/blog/detail/{{$blog.ID}}"
+                        <a target="_blank" href="/blog/detail/{{$blog.ID}}.html"
                            class="w-100 list-group-item list-group-item-action mb-2 border-left-0 border-right-0 border-top-0">
                             <div class="d-flex w-100 justify-content-between">
                                 <h5 class="mb-1">{{$blog.Title|html}}</h5>
@@ -52,7 +52,7 @@
                         <li class="list-group-item bg-dark text-white">精选文章</li>
                         {{range $blog:=.goodBlogSlice}}
                             <li class="list-group-item border-0">
-                                <a class="text-dark text-decoration-none" target="_blank" href="/blog/detail/{{$blog.ID}}">
+                                <a class="text-dark text-decoration-none" target="_blank" href="/blog/detail/{{$blog.ID}}.html">
                                     {{$blog.Title}}
                                 </a>
                             </li>

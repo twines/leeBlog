@@ -6,6 +6,7 @@ import (
 	"leeblog.com/pkg/utils"
 	"math"
 	"strconv"
+	"strings"
 )
 
 func Index(c *gin.Context) {
@@ -14,7 +15,7 @@ func Index(c *gin.Context) {
 		page = p
 	}
 	id := 0
-	if i, err := strconv.Atoi(c.Param("id")); err == nil {
+	if i, err := strconv.Atoi(strings.TrimSuffix(c.Param("id.html"), ".html")); err == nil {
 		id = i
 	}
 	blogSlice, count := web.NewBlog().GetBlogList(id, page)

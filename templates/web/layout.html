@@ -13,7 +13,7 @@
                 {{if .categorySlice}}
                     {{range $index,$category := .categorySlice}}
                         <li class="nav-item {{if $.navId }} {{if eq $.navId $category.ID}} active {{end}} {{end}}">
-                            <a class="nav-link" href="/category/{{$category.ID}}">{{$category.CategoryName}}</a>
+                            <a class="nav-link" href="/category/{{$category.ID}}.html">{{$category.CategoryName}}</a>
                         </li>
                     {{end}}
                 {{end}}
@@ -54,6 +54,16 @@
     <link href="/fontawesome/css/solid.css" rel="stylesheet">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-ico"/>
     {{block "css" .}}{{end}}
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?872d69067b0527d309d3987e9731ce0f";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
 </head>
 
 <body>

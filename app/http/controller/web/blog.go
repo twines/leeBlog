@@ -8,10 +8,11 @@ import (
 	"leeblog.com/pkg/utils"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 func BlogDetail(c *gin.Context) {
-	if id, err := strconv.Atoi(c.Param("id")); err != nil {
+	if id, err := strconv.Atoi(strings.TrimSuffix(c.Param("id.html"), ".html")); err != nil {
 	} else {
 		blog := web.NewBlog().GetBlogById(id)
 		blog.View += 1
