@@ -43,11 +43,14 @@ func BlogEdit(c *gin.Context) {
 	} else {
 		blog := web.NewBlog().GetBlogById(id)
 		user, _ := c.Get("user")
+		fmt.Println(user.(models.User).ID)
+		fmt.Println(uint(blog.UserId))
 		if user.(models.User).ID != uint(blog.UserId) {
 			utils.View404(c)
+		} else {
+			childCategory := web.NewCategory().GetChildCategory()
+			utils.View(c, "/web/blog/edit.html", gin.H{"blog": blog, "childCategory": childCategory})
 		}
-		childCategory := web.NewCategory().GetChildCategory()
-		utils.View(c, "/web/blog/edit.html", gin.H{"blog": blog, "childCategory": childCategory})
 	}
 }
 func BlogUpdate(c *gin.Context) {

@@ -9,6 +9,6 @@ type User struct {
 	Password string `json:"password"`
 	Avatar   string `json:"avatar"`
 	Gender   uint8  `json:"gender"`
-	Status   uint8  `json:"status"`
+	Status   uint8  `json:"status" gorm:"default:1"`
 	Address  string `json:"address"`
 }
