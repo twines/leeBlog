@@ -3,3 +3,10 @@
 [表单验证](https://blog.csdn.net/wyansai/article/details/103339026)
 
 [gin session](https://github.com/gin-contrib/sessions)
+
+```
+set GOARCH=amd64
+set GOOS=linux
+go build main.go
+
+```
